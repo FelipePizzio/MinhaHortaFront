@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "MinhaHortaFront",
+    "slug": "MinhaHortaFront",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
