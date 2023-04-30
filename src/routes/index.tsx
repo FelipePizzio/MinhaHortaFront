@@ -6,7 +6,7 @@ export function Routes() {
   return (
     <NavigationContainer>
       <AuthRoutes />
-      <AppRoutes />
+      {/* <AppRoutes /> */}
     </NavigationContainer>
   )
 }

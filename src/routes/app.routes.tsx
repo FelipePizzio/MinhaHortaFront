@@ -13,6 +13,7 @@ import ProfileSvg from '@assets/profile.svg'
 type AppRoutesType = {
   home: undefined
   profile: undefined
+  exercise: undefined
 }
 
 export type AppNavigatorRoutesProps = BottomTabNavigationProp<AppRoutesType>
@@ -51,6 +52,16 @@ export function AppRoutes() {
         />
         <Screen
           name="profile"
+          component={Profile}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <ProfileSvg fill={color} width={iconSize} height={iconSize} />
+            ),
+          }}
+        />
+
+        <Screen
+          name="exercise"
           component={Profile}
           options={{
             tabBarIcon: ({ color }) => (
