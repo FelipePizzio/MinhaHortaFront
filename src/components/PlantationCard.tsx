@@ -1,10 +1,13 @@
 import { HStack, Heading, Image, Text, VStack, Icon } from 'native-base'
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
+import { PlantationDTO } from '@dtos/PlantationDTO'
 
-type Props = TouchableOpacityProps & {}
+type Props = TouchableOpacityProps & {
+  data: PlantationDTO
+}
 
-export function ExerciseCard({ ...rest }: Props) {
+export function PlantationCard({ data, ...rest }: Props) {
   return (
     <TouchableOpacity {...rest}>
       <HStack

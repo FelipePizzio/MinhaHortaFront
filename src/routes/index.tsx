@@ -7,14 +7,13 @@ import { Loading } from '@components/Loading'
 export function Routes() {
   const { user, isLoadingUserStorageData } = useAuth()
 
-  if(isLoadingUserStorageData) {
+  if (isLoadingUserStorageData) {
     return <Loading />
-  } 
-  
+  }
+
   return (
     <NavigationContainer>
       {user.id ? <AppRoutes /> : <AuthRoutes />}
     </NavigationContainer>
   )
-  
 }

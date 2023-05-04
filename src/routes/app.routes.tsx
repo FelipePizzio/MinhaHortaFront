@@ -9,6 +9,7 @@ import { Box, useTheme } from 'native-base'
 
 import HomeSvg from '@assets/home.svg'
 import ProfileSvg from '@assets/profile.svg'
+import { Exercise } from '@screens/Exercise'
 
 type AppRoutesType = {
   home: undefined
@@ -51,8 +52,8 @@ export function AppRoutes() {
           }}
         />
         <Screen
-          name="profile"
-          component={Profile}
+          name="exercise"
+          component={Exercise}
           options={{
             tabBarIcon: ({ color }) => (
               <ProfileSvg fill={color} width={iconSize} height={iconSize} />
@@ -61,7 +62,7 @@ export function AppRoutes() {
         />
 
         <Screen
-          name="exercise"
+          name="profile"
           component={Profile}
           options={{
             tabBarIcon: ({ color }) => (

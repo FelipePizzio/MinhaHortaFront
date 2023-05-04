@@ -56,6 +56,8 @@ export function SignIn() {
         placement: 'top',
         backgroundColor: 'red.500',
       })
+    } finally {
+      setIsLoading(false)
     }
   }
 
