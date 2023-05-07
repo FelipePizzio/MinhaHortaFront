@@ -9,12 +9,13 @@ import { Box, useTheme } from 'native-base'
 
 import HomeSvg from '@assets/home.svg'
 import ProfileSvg from '@assets/profile.svg'
-import { Exercise } from '@screens/Exercise'
+import { AddPlantation } from '@screens/AddPlantation'
 
 type AppRoutesType = {
   home: undefined
   profile: undefined
-  exercise: undefined
+  plantation: undefined
+  addPlantation: undefined
 }
 
 export type AppNavigatorRoutesProps = BottomTabNavigationProp<AppRoutesType>
@@ -51,9 +52,10 @@ export function AppRoutes() {
             ),
           }}
         />
+
         <Screen
-          name="exercise"
-          component={Exercise}
+          name="plantation"
+          component={Profile}
           options={{
             tabBarIcon: ({ color }) => (
               <ProfileSvg fill={color} width={iconSize} height={iconSize} />
@@ -72,13 +74,14 @@ export function AppRoutes() {
         />
 
         {/* Exemplo de rota que não aparece no BottomNavigator */}
-        {/* <Screen
-          name="profile"
-          component={Profile}
+
+        <Screen
+          name="addPlantation"
+          component={AddPlantation}
           options={{
             tabBarButton: () => null,
           }}
-        /> */}
+        />
       </Navigator>
     </Box>
   )

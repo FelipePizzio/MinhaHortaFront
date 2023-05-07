@@ -7,9 +7,19 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { AppNavigatorRoutesProps } from '@routes/app.routes'
 import { api } from '@services/api'
 import { AppError } from '@utils/AppError'
-import { VStack, FlatList, HStack, Heading, Text, useToast } from 'native-base'
+import {
+  VStack,
+  FlatList,
+  HStack,
+  Heading,
+  Text,
+  useToast,
+  Icon,
+} from 'native-base'
 import { useCallback, useState } from 'react'
 import { Loading } from '@components/Loading'
+import { TouchableOpacity } from 'react-native'
+import { MaterialIcons } from '@expo/vector-icons'
 
 export function Home() {
   const groups = ['Plantações', 'Tarefas']
@@ -22,33 +32,36 @@ export function Home() {
   const toast = useToast()
 
   function handleOpen() {
-    navigation.navigate('exercise')
+    navigation.navigate('plantation')
   }
 
-  async function fetchPlantation() {
-    try {
-      const response = await api.get('/plantations')
-      setList(response.data)
-    } catch (error) {
-      const isAppError = error instanceof AppError
-      const title = isAppError
-        ? error.message
-        : 'Não foi possível carregar as plantações'
-
-      toast.show({
-        title,
-        placement: 'top',
-        backgroundColor: 'red.500',
-      })
-    } finally {
-      setIsLoading(false)
-    }
+  function handleAddPlantation() {
+    navigation.navigate('addPlantation')
   }
 
   useFocusEffect(
     useCallback(() => {
+      async function fetchPlantation() {
+        try {
+          const response = await api.get('/plantations')
+          setList(response.data.plantations)
+        } catch (error) {
+          const isAppError = error instanceof AppError
+          const title = isAppError
+            ? error.message
+            : 'Não foi possível carregar as plantações'
+
+          toast.show({
+            title,
+            placement: 'top',
+            backgroundColor: 'red.500',
+          })
+        } finally {
+          setIsLoading(false)
+        }
+      }
+
       fetchPlantation()
-      console.log('list', list)
     }, []),
   )
 
@@ -81,9 +94,17 @@ export function Home() {
         <VStack flex={1} paddingX={8}>
           <HStack justifyContent="space-between" marginBottom={5}>
             <Heading fontFamily="heading">Plantações</Heading>
-            <Text color="gray.200" fontSize="sm">
-              {list.length}
+            <Text color="gray.300" fontSize="sm">
+              {list?.length || 0}
             </Text>
+            <TouchableOpacity onPress={handleAddPlantation}>
+              <Icon
+                as={MaterialIcons}
+                name="add-circle-outline"
+                color="gray.300"
+                size={7}
+              />
+            </TouchableOpacity>
           </HStack>
 
           <FlatList
@@ -94,10 +115,7 @@ export function Home() {
               paddingBottom: 20,
             }}
             renderItem={({ item }) => (
-              <>
-                <Text>a</Text>
-                <PlantationCard data={item} onPress={handleOpen} />
-              </>
+              <PlantationCard data={item} onPress={handleOpen} />
             )}
           />
         </VStack>

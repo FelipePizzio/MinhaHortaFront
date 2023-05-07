@@ -19,7 +19,7 @@ export function Header({ isHome, title }: Props) {
       backgroundColor="gray.600"
       paddingTop={16}
       paddingBottom={5}
-      paddingX={8}
+      paddingX={4}
       alignItems="center"
     >
       <UserPhoto

@@ -20,7 +20,7 @@ export function PlantationCard({ data, ...rest }: Props) {
       >
         <Image
           source={{
-            uri: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fm.biologianet.com%2Fbiodiversidade%2Fcapivara.htm&psig=AOvVaw3_mskWluFpJXdAWf92SIuG&ust=1681736889571000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCKjEi6G8rv4CFQAAAAAdAAAAABAE',
+            uri: data.image,
           }}
           alt="Imagem"
           width={16}
@@ -31,10 +31,10 @@ export function PlantationCard({ data, ...rest }: Props) {
         />
         <VStack flex={1}>
           <Heading fontSize="lg" color="white" fontFamily="heading">
-            CAPIVARA
+            {data.name}
           </Heading>
           <Text fontSize="sm" color="gray.200" marginTop={1} numberOfLines={2}>
-            texto
+            {data.plantId}
           </Text>
         </VStack>
 
