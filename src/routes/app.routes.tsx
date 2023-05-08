@@ -10,12 +10,17 @@ import { Box, useTheme } from 'native-base'
 import HomeSvg from '@assets/home.svg'
 import ProfileSvg from '@assets/profile.svg'
 import { AddPlantation } from '@screens/AddPlantation'
+import { PlantCatalog } from '@screens/PlantCatalog'
+import { PlantationInfo } from '@screens/PlantationInfo'
+import { PlantInfo } from '@screens/PlantInfo'
 
 type AppRoutesType = {
   home: undefined
   profile: undefined
-  plantation: undefined
+  plantationInfo: { plantationId: string }
   addPlantation: undefined
+  plantCatalog: undefined
+  plantInfo: { plantId: string }
 }
 
 export type AppNavigatorRoutesProps = BottomTabNavigationProp<AppRoutesType>
@@ -54,8 +59,8 @@ export function AppRoutes() {
         />
 
         <Screen
-          name="plantation"
-          component={Profile}
+          name="plantCatalog"
+          component={PlantCatalog}
           options={{
             tabBarIcon: ({ color }) => (
               <ProfileSvg fill={color} width={iconSize} height={iconSize} />
@@ -78,6 +83,22 @@ export function AppRoutes() {
         <Screen
           name="addPlantation"
           component={AddPlantation}
+          options={{
+            tabBarButton: () => null,
+          }}
+        />
+
+        <Screen
+          name="plantationInfo"
+          component={PlantationInfo}
+          options={{
+            tabBarButton: () => null,
+          }}
+        />
+
+        <Screen
+          name="plantInfo"
+          component={PlantInfo}
           options={{
             tabBarButton: () => null,
           }}

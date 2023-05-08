@@ -26,12 +26,12 @@ import { PlantDTO } from '@dtos/PlantDTO'
 
 type FormDataProps = {
   name: string
-  plant: string
+  plantId: string
 }
 
 const addPlantationSchema = yup.object({
   name: yup.string().required('Informe um nome para a plantação.'),
-  plant: yup.string().required('Informe a planta'),
+  plantId: yup.string().required('Informe a planta'),
 })
 
 export function AddPlantation() {
@@ -50,13 +50,13 @@ export function AddPlantation() {
     navigation.goBack()
   }
 
-  async function handleAddPlantation({ name, plant }: FormDataProps) {
+  async function handleAddPlantation({ name, plantId }: FormDataProps) {
     try {
       setIsLoading(true)
 
       await api.post('/plantation', {
         name,
-        plantId: plant,
+        plantId,
         userId: user.id,
       })
     } catch (error) {
@@ -79,7 +79,7 @@ export function AddPlantation() {
     useCallback(() => {
       async function fetchPlants() {
         try {
-          const response = await api.get('/plant')
+          const response = await api.get('/plants')
           setList(response.data.plants)
         } catch (error) {
           const isAppError = error instanceof AppError
@@ -99,7 +99,7 @@ export function AddPlantation() {
 
       setIsLoading(true)
       fetchPlants()
-    }, []),
+    }, [toast]),
   )
 
   return (
@@ -142,7 +142,7 @@ export function AddPlantation() {
 
         <Controller
           control={control}
-          name="plant"
+          name="plantId"
           render={({ field: { onChange } }) => (
             <FormControl>
               <Select onValueChange={onChange} placeholder="Escolha a planta">
@@ -159,7 +159,7 @@ export function AddPlantation() {
               <FormControl.ErrorMessage
                 leftIcon={<WarningOutlineIcon size="xs" />}
               >
-                {errors.plant?.message}
+                {errors.plantId?.message}
               </FormControl.ErrorMessage>
             </FormControl>
           )}

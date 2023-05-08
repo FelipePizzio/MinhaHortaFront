@@ -22,17 +22,17 @@ import { TouchableOpacity } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 
 export function Home() {
-  const groups = ['Plantações', 'Tarefas']
+  const groups = ['Plantações'] // , 'Tarefas'
+
   const [list, setList] = useState<PlantationDTO[]>([])
   const [groupSelected, setGroupSelected] = useState('Plantações')
   const [isLoading, setIsLoading] = useState(true)
 
   const navigation = useNavigation<AppNavigatorRoutesProps>()
-
   const toast = useToast()
 
-  function handleOpen() {
-    navigation.navigate('plantation')
+  function handleOpen(plantationId: string) {
+    navigation.navigate('plantationInfo', { plantationId })
   }
 
   function handleAddPlantation() {
@@ -41,7 +41,7 @@ export function Home() {
 
   useFocusEffect(
     useCallback(() => {
-      async function fetchPlantation() {
+      async function fetchPlantations() {
         try {
           const response = await api.get('/plantations')
           setList(response.data.plantations)
@@ -61,7 +61,7 @@ export function Home() {
         }
       }
 
-      fetchPlantation()
+      fetchPlantations()
     }, []),
   )
 
@@ -115,7 +115,7 @@ export function Home() {
               paddingBottom: 20,
             }}
             renderItem={({ item }) => (
-              <PlantationCard data={item} onPress={handleOpen} />
+              <PlantationCard data={item} onPress={() => handleOpen(item.id)} />
             )}
           />
         </VStack>

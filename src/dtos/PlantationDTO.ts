@@ -3,5 +3,6 @@ export type PlantationDTO = {
   name: string
   plantId: string
   userId: string
-  image: string
+  image: string | null
+  created_at: string
 }
