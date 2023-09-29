@@ -5,6 +5,7 @@ import { api } from '@services/api'
 import { AppError } from '@utils/AppError'
 import {
   Center,
+  FlatList,
   HStack,
   Heading,
   Icon,
@@ -98,8 +99,13 @@ export function PlantInfo() {
             endColor="gray.400"
             marginY={10}
           />
-          <VStack>
+          <VStack paddingX={8} height={250}>
             <Text marginBottom={5}>Planta: {plant?.name}</Text>
+            <Text>Tarefas:</Text>
+            <FlatList
+              data={plant?.tasks}
+              renderItem={({ item }) => <Text marginLeft={10}>{item}</Text>}
+            />
           </VStack>
         </Center>
       )}

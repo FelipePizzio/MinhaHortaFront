@@ -78,8 +78,6 @@ export function AppRoutes() {
           }}
         />
 
-        {/* Exemplo de rota que não aparece no BottomNavigator */}
-
         <Screen
           name="addPlantation"
           component={AddPlantation}
