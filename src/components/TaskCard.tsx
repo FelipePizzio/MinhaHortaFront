@@ -69,7 +69,13 @@ export function TaskCard({ data, ...rest }: Props) {
   return isLoading ? (
     <Loading />
   ) : (
-    <HStack alignItems="center" padding={2} paddingRight={4} marginBottom={3}>
+    <HStack
+      alignItems="center"
+      padding={2}
+      paddingRight={4}
+      marginBottom={3}
+      onTouchEnd={handleCompleteTask}
+    >
       <Checkbox
         value={data.name}
         isChecked={isCompleted}
@@ -79,6 +85,7 @@ export function TaskCard({ data, ...rest }: Props) {
       <TouchableOpacity {...rest}>
         <Text>{plantation?.name}</Text>
         <Text>{data.name}</Text>
+        <Text>{data.created_at.split('T')[0]}</Text>
       </TouchableOpacity>
     </HStack>
   )

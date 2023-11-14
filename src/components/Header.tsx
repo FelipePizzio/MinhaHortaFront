@@ -22,12 +22,14 @@ export function Header({ isHome, title }: Props) {
       paddingX={4}
       alignItems="center"
     >
+      {/** 
       <UserPhoto
         source={user.avatar ? { uri: user.avatar } : defaultUserPhotoImg}
         alt="Imagem de perfil do usuário"
         size={16}
         margin={4}
       />
+      */}
       <VStack flex={1}>
         <Text color="gray.100" fontSize="md">
           Olá,

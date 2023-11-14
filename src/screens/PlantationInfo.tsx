@@ -4,6 +4,7 @@ import {
   HStack,
   Heading,
   Icon,
+  Image,
   Select,
   Skeleton,
   Text,
@@ -211,13 +212,29 @@ export function PlantationInfo() {
         <Loading />
       ) : (
         <Center>
-          <Skeleton
-            width={PHOTO_SIZE}
-            height={PHOTO_SIZE}
-            startColor="gray.500"
-            endColor="gray.400"
-            marginY={10}
-          />
+          {plantation?.image ? (
+            <Image
+              source={{
+                uri: plantation.image,
+              }}
+              alt="Imagem"
+              width={PHOTO_SIZE}
+              height={PHOTO_SIZE}
+              rounded="md"
+              resizeMode="cover"
+              marginTop={10}
+              marginBottom={5}
+            />
+          ) : (
+            <Skeleton
+              width={PHOTO_SIZE}
+              height={PHOTO_SIZE}
+              startColor="gray.500"
+              endColor="gray.400"
+              marginTop={10}
+            />
+          )}
+
           <VStack>
             {enableEdit && !isLoadingListPlants ? (
               <VStack>
@@ -241,14 +258,14 @@ export function PlantationInfo() {
                   render={({ field: { onChange } }) => (
                     <FormControl>
                       <Select
-                        placeholder={plant?.name}
+                        placeholder={plant?.name[0]}
                         onValueChange={onChange}
                       >
                         {listPlants.map((item) => {
                           return (
                             <Select.Item
                               key={item.id}
-                              label={item.name}
+                              label={item.name[0]}
                               value={item.id}
                             />
                           )
@@ -269,11 +286,11 @@ export function PlantationInfo() {
                   {plantation?.name}
                 </Heading>
 
-                <Text marginBottom={5}>Planta: {plant?.name}</Text>
+                <Text marginBottom={5}>Planta: {plant?.name[0]}</Text>
               </VStack>
             )}
 
-            <Text>Dia plantado: {plantation?.created_at}</Text>
+            <Text>Dia plantado: {plantation?.created_at.split('T')[0]}</Text>
           </VStack>
           <HStack
             justifyContent="space-around"

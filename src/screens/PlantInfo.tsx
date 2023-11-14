@@ -9,6 +9,7 @@ import {
   HStack,
   Heading,
   Icon,
+  Image,
   Skeleton,
   Text,
   VStack,
@@ -92,15 +93,32 @@ export function PlantInfo() {
         <Loading />
       ) : (
         <Center>
-          <Skeleton
-            width={PHOTO_SIZE}
-            height={PHOTO_SIZE}
-            startColor="gray.500"
-            endColor="gray.400"
-            marginY={10}
-          />
+          {plant?.image_url ? (
+            <Image
+              source={{
+                uri: plant.image_url,
+              }}
+              alt="Imagem"
+              width={PHOTO_SIZE}
+              height={PHOTO_SIZE}
+              rounded="md"
+              resizeMode="cover"
+              marginTop={10}
+              marginBottom={5}
+            />
+          ) : (
+            <Skeleton
+              width={PHOTO_SIZE}
+              height={PHOTO_SIZE}
+              startColor="gray.500"
+              endColor="gray.400"
+              marginTop={10}
+              marginBottom={5}
+            />
+          )}
+
           <VStack paddingX={8} height={250}>
-            <Text marginBottom={5}>Planta: {plant?.name}</Text>
+            <Text marginBottom={5}>Nome: {plant?.name[0]}</Text>
             <Text>Tarefas:</Text>
             <FlatList
               data={plant?.tasks}

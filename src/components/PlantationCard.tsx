@@ -76,7 +76,7 @@ export function PlantationCard({ data, ...rest }: Props) {
               height={PHOTO_SIZE}
               rounded="md"
               marginRight={4}
-              resizeMode="contain"
+              resizeMode="cover"
             />
           ) : (
             <Skeleton
@@ -98,7 +98,7 @@ export function PlantationCard({ data, ...rest }: Props) {
               marginTop={1}
               numberOfLines={2}
             >
-              {plant?.name}
+              {plant?.name[0]}
             </Text>
           </VStack>
 

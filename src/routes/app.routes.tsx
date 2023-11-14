@@ -9,6 +9,7 @@ import { Box, useTheme } from 'native-base'
 
 import HomeSvg from '@assets/home.svg'
 import ProfileSvg from '@assets/profile.svg'
+import BooksSvg from '@assets/books.svg'
 import { AddPlantation } from '@screens/AddPlantation'
 import { PlantCatalog } from '@screens/PlantCatalog'
 import { PlantationInfo } from '@screens/PlantationInfo'
@@ -63,7 +64,7 @@ export function AppRoutes() {
           component={PlantCatalog}
           options={{
             tabBarIcon: ({ color }) => (
-              <ProfileSvg fill={color} width={iconSize} height={iconSize} />
+              <BooksSvg fill={color} width={iconSize} height={iconSize} />
             ),
           }}
         />

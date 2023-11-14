@@ -10,6 +10,7 @@ import { useCallback, useState } from 'react'
 export function TasksList() {
   const [list, setList] = useState<TaskDTO[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const date = new Date()
 
   const toast = useToast()
 
@@ -34,7 +35,7 @@ export function TasksList() {
           setIsLoading(false)
         }
       }
-
+      console.log(date)
       fecthTasks()
     }, []),
   )
@@ -44,7 +45,9 @@ export function TasksList() {
   ) : (
     <VStack flex={1} paddingX={8}>
       <HStack justifyContent="space-between" marginBottom={5}>
-        <Heading fontFamily="heading">Tarefas</Heading>
+        <Heading fontFamily="heading">
+          Tarefas - {date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}
+        </Heading>
         <Text color="gray.300" fontSize="sm">
           {list?.length || 0}
         </Text>

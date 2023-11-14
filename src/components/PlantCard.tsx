@@ -28,17 +28,17 @@ export function PlantCard({ data, ...rest }: Props) {
         rounded="md"
         marginBottom={3}
       >
-        {data.image ? (
+        {data.image_url ? (
           <Image
             source={{
-              uri: data.image,
+              uri: data.image_url,
             }}
             alt="Imagem"
             width={PHOTO_SIZE}
             height={PHOTO_SIZE}
             rounded="md"
             marginRight={4}
-            resizeMode="contain"
+            resizeMode="cover"
           />
         ) : (
           <Skeleton
@@ -52,10 +52,10 @@ export function PlantCard({ data, ...rest }: Props) {
 
         <VStack flex={1}>
           <Heading fontSize="lg" color="white" fontFamily="heading">
-            {data.name}
+            {data.name[0]}
           </Heading>
           <Text fontSize="sm" color="gray.200" marginTop={1} numberOfLines={2}>
-            {data?.name}
+            {data?.scientific_name}
           </Text>
         </VStack>
 

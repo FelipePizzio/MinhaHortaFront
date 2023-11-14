@@ -53,12 +53,12 @@ export function AddPlantation() {
   async function handleAddPlantation({ name, plantId }: FormDataProps) {
     try {
       setIsLoading(true)
-
       await api.post('/plantation', {
         name,
         plantId,
         userId: user.id,
       })
+      handleGoBack()
     } catch (error) {
       const isAppError = error instanceof AppError
       const title = isAppError
@@ -150,7 +150,7 @@ export function AddPlantation() {
                   return (
                     <Select.Item
                       key={item.id}
-                      label={item.name}
+                      label={item.name[0]}
                       value={item.id}
                     />
                   )
