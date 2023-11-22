@@ -12,6 +12,7 @@ import {
   storageUserRemove,
 } from '@storage/storageUser'
 import { ReactNode, createContext, useEffect, useState } from 'react'
+import { OneSignal } from 'react-native-onesignal'
 
 export type AuthContextDataProps = {
   user: UserDTO
@@ -47,6 +48,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         await storageAuthTokenSave(data.token)
 
         userAndTokenUpdate(data.user, data.token)
+        OneSignal.User.addTag('name', data.user.name)
       }
     } catch (error) {
       throw error

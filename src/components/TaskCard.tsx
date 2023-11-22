@@ -2,16 +2,17 @@ import { PlantationDTO } from '@dtos/PlantationDTO'
 import { TaskDTO } from '@dtos/TaskDTO'
 import { api } from '@services/api'
 import { AppError } from '@utils/AppError'
-import { Checkbox, HStack, Text, useToast } from 'native-base'
+import { Checkbox, HStack, Text, VStack, useToast } from 'native-base'
 import { useEffect, useState } from 'react'
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import { Loading } from './Loading'
 
 type Props = TouchableOpacityProps & {
   data: TaskDTO
+  handleTagOpenTask: (arg0: boolean) => void
 }
 
-export function TaskCard({ data, ...rest }: Props) {
+export function TaskCard({ data, handleTagOpenTask, ...rest }: Props) {
   const [isCompleted, setIsCompleted] = useState<boolean>(data.completed)
   const [isLoading, setIsLoading] = useState(true)
   const [plantation, setPlantation] = useState<PlantationDTO>()
@@ -52,6 +53,7 @@ export function TaskCard({ data, ...rest }: Props) {
         completed: !isCompleted,
       })
       setIsCompleted(!isCompleted)
+      handleTagOpenTask(!isCompleted)
     } catch (error) {
       const isAppError = error instanceof AppError
       const title = isAppError
@@ -81,11 +83,15 @@ export function TaskCard({ data, ...rest }: Props) {
         isChecked={isCompleted}
         onChange={handleCompleteTask}
         marginRight={5}
+        aria-label={data.name}
       />
       <TouchableOpacity {...rest}>
-        <Text>{plantation?.name}</Text>
-        <Text>{data.name}</Text>
-        <Text>{data.created_at.split('T')[0]}</Text>
+        <VStack>
+          <Text>Plantação: {plantation?.name}</Text>
+          <Text>
+            {data.name}: {plantation?.water} ml
+          </Text>
+        </VStack>
       </TouchableOpacity>
     </HStack>
   )

@@ -4,5 +4,5 @@ export type TaskDTO = {
   plantationId: string
   userId: string
   completed: boolean
-  created_at: string
+  created_at: Date
 }

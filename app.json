@@ -2,17 +2,34 @@
   "expo": {
     "name": "MinhaHortaFront",
     "slug": "MinhaHortaFront",
+    "scheme": "MinhaHorta",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
     ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.MinhaHorta"
+    },
     "plugins": [
       [
         "expo-image-picker",
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends"
         }
+      ],
+      [
+        "onesignal-expo-plugin",
+        {
+          "mode": "development"
+        }
       ]
-    ]
+    ],
+    "android": {
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.MinhaHorta"
+    }
   }
 }

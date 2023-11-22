@@ -5,4 +5,5 @@ export type PlantationDTO = {
   userId: string
   image: string | null
   created_at: string
+  water: number
 }

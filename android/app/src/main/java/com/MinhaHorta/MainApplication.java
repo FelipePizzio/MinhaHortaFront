@@ -1,4 +1,4 @@
-package com.minhahortafront;
+package com.MinhaHorta;
 
 import android.app.Application;
 import android.content.res.Configuration;

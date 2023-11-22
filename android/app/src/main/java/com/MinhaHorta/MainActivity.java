@@ -1,4 +1,4 @@
-package com.minhahortafront;
+package com.MinhaHorta;
 
 import android.os.Build;
 import android.os.Bundle;
