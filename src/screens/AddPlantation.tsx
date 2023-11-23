@@ -38,15 +38,19 @@ export function AddPlantation() {
   const navigation = useNavigation<AppNavigatorRoutesProps>()
   const [list, setList] = useState<PlantDTO[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  const toast = useToast()
   const {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FormDataProps>({ resolver: yupResolver(addPlantationSchema) })
+  const toast = useToast()
   const { user } = useAuth()
 
   function handleGoBack() {
+    reset({
+      name: '',
+    })
     navigation.goBack()
   }
 
@@ -126,13 +130,13 @@ export function AddPlantation() {
         </Heading>
       </HStack>
 
-      <Center>
+      <Center margin={5} height={500}>
         <Controller
           control={control}
           name="name"
           render={({ field: { onChange, value } }) => (
             <Input
-              placeholder="Nome"
+              placeholder="De um nome para sua plantação"
               onChangeText={onChange}
               value={value}
               errorMessage={errors.name?.message}
@@ -169,6 +173,7 @@ export function AddPlantation() {
           title="Criar plantação"
           onPress={handleSubmit(handleAddPlantation)}
           isLoading={isLoading}
+          marginTop={5}
         />
       </Center>
     </VStack>

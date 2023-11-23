@@ -1,4 +1,5 @@
 import {
+  Center,
   FlatList,
   HStack,
   Heading,
@@ -78,17 +79,35 @@ export function PlantationList() {
         </TouchableOpacity>
       </HStack>
 
-      <FlatList
-        data={list}
-        keyExtractor={(item) => item.id}
-        showsVerticalScrollIndicator={false}
-        _contentContainerStyle={{
-          paddingBottom: 20,
-        }}
-        renderItem={({ item }) => (
-          <PlantationCard data={item} onPress={() => handleOpen(item.id)} />
-        )}
-      />
+      {list?.length > 0 ? (
+        <FlatList
+          data={list}
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+          _contentContainerStyle={{
+            paddingBottom: 20,
+          }}
+          renderItem={({ item }) => (
+            <PlantationCard data={item} onPress={() => handleOpen(item.id)} />
+          )}
+        />
+      ) : (
+        <Center height={350}>
+          <TouchableOpacity onPress={handleAddPlantation}>
+            <Center>
+              <Text fontSize={20}>Clique no botão </Text>
+              <Icon
+                as={MaterialIcons}
+                name="add-circle-outline"
+                color="gray.300"
+                size={10}
+                marginY={5}
+              />
+              <Text fontSize={20}> e comece a plantar!</Text>
+            </Center>
+          </TouchableOpacity>
+        </Center>
+      )}
     </VStack>
   )
 }

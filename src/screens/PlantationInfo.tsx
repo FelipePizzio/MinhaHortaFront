@@ -1,5 +1,6 @@
 import {
   Center,
+  FlatList,
   FormControl,
   HStack,
   Heading,
@@ -27,6 +28,7 @@ import * as yup from 'yup'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Input } from '@components/Input'
+import moment from 'moment'
 
 type RouteParamsProps = {
   plantationId: string
@@ -58,6 +60,8 @@ export function PlantationInfo() {
   const [plantation, setPlantation] = useState<PlantationDTO>()
   const [plant, setPlant] = useState<PlantDTO>()
   const [listPlants, setListPlants] = useState<PlantDTO[]>([])
+
+  let date = moment()
 
   const {
     control,
@@ -144,6 +148,7 @@ export function PlantationInfo() {
 
     if (!isLoadingUpdate) {
       fetchPlantationInfo()
+      date = moment(plantation?.created_at)
     }
   }, [plantationId, isLoadingUpdate])
 
@@ -174,6 +179,7 @@ export function PlantationInfo() {
     }
   }, [isLoadingPlantation])
 
+  /**
   useEffect(() => {
     setEnableEdit(false)
   }, [])
@@ -183,6 +189,7 @@ export function PlantationInfo() {
       fetchPlants()
     }
   }, [enableEdit])
+  */
 
   return (
     <VStack flex={1}>
@@ -211,31 +218,33 @@ export function PlantationInfo() {
       {isLoadingPlant ? (
         <Loading />
       ) : (
-        <Center>
-          {plantation?.image ? (
-            <Image
-              source={{
-                uri: plantation.image,
-              }}
-              alt="Imagem"
-              width={PHOTO_SIZE}
-              height={PHOTO_SIZE}
-              rounded="md"
-              resizeMode="cover"
-              marginTop={10}
-              marginBottom={5}
-            />
-          ) : (
-            <Skeleton
-              width={PHOTO_SIZE}
-              height={PHOTO_SIZE}
-              startColor="gray.500"
-              endColor="gray.400"
-              marginTop={10}
-            />
-          )}
+        <VStack height={250}>
+          <Center>
+            {plantation?.image ? (
+              <Image
+                source={{
+                  uri: plantation.image,
+                }}
+                alt="Imagem"
+                width={PHOTO_SIZE}
+                height={PHOTO_SIZE}
+                rounded="md"
+                resizeMode="cover"
+                marginTop={10}
+                marginBottom={5}
+              />
+            ) : (
+              <Skeleton
+                width={PHOTO_SIZE}
+                height={PHOTO_SIZE}
+                startColor="gray.500"
+                endColor="gray.400"
+                marginTop={10}
+              />
+            )}
+          </Center>
 
-          <VStack>
+          <VStack paddingLeft={16}>
             {enableEdit && !isLoadingListPlants ? (
               <VStack>
                 <Controller
@@ -282,16 +291,39 @@ export function PlantationInfo() {
               </VStack>
             ) : (
               <VStack>
-                <Heading textTransform="capitalize" fontFamily="heading">
-                  {plantation?.name}
-                </Heading>
+                <Text marginBottom={2}>
+                  Planta: <Text fontWeight={'bold'}> {plant?.name[0]} </Text>
+                </Text>
+                <Text marginBottom={2}>
+                  Dia plantado:
+                  <Text fontWeight={'bold'}> {date.format('DD/MM/YY')} </Text>
+                </Text>
+                {plant && plant.name.length > 1 && (
+                  <>
+                    <Text>Conhecida por:</Text>
+                    <FlatList
+                      marginBottom={2}
+                      data={plant?.name
+                        .slice(1, plant.name.length)
+                        .sort(function (a, b) {
+                          if (a < b) return -1
+                          if (a > b) return 1
+                          return 0
+                        })}
+                      renderItem={({ item }) => (
+                        <Text fontWeight={'bold'} marginLeft={5}>
+                          {item}
+                        </Text>
+                      )}
+                    />
+                  </>
+                )}
 
-                <Text marginBottom={5}>Planta: {plant?.name[0]}</Text>
+                <Text>Regar a cada {plant?.water_frequency} dias</Text>
               </VStack>
             )}
-
-            <Text>Dia plantado: {plantation?.created_at.split('T')[0]}</Text>
           </VStack>
+          {/** 
           <HStack
             justifyContent="space-around"
             width="full"
@@ -316,7 +348,8 @@ export function PlantationInfo() {
               <Button title="Editar" onPress={handleEnableEdit} width="1/2" />
             )}
           </HStack>
-        </Center>
+          */}
+        </VStack>
       )}
     </VStack>
   )

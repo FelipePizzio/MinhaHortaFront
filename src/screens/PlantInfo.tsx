@@ -37,7 +37,7 @@ export function PlantInfo() {
   const { plantId } = route.params as RouteParamsProps
 
   function handleGoBack() {
-    navigation.goBack()
+    navigation.navigate('plantCatalog')
   }
 
   useEffect(() => {
@@ -85,47 +85,72 @@ export function PlantInfo() {
           flexShrink={1}
           fontFamily="heading"
         >
-          {plant?.name}
+          {plant?.name[0]}
         </Heading>
       </HStack>
 
       {isLoadingPlant ? (
         <Loading />
       ) : (
-        <Center>
-          {plant?.image_url ? (
-            <Image
-              source={{
-                uri: plant.image_url,
-              }}
-              alt="Imagem"
-              width={PHOTO_SIZE}
-              height={PHOTO_SIZE}
-              rounded="md"
-              resizeMode="cover"
-              marginTop={10}
-              marginBottom={5}
-            />
-          ) : (
-            <Skeleton
-              width={PHOTO_SIZE}
-              height={PHOTO_SIZE}
-              startColor="gray.500"
-              endColor="gray.400"
-              marginTop={10}
-              marginBottom={5}
-            />
-          )}
+        <VStack height={250}>
+          <Center>
+            {plant?.image_url ? (
+              <Image
+                source={{
+                  uri: plant.image_url,
+                }}
+                alt="Imagem"
+                width={PHOTO_SIZE}
+                height={PHOTO_SIZE}
+                rounded="md"
+                resizeMode="cover"
+                marginTop={10}
+                marginBottom={5}
+              />
+            ) : (
+              <Skeleton
+                width={PHOTO_SIZE}
+                height={PHOTO_SIZE}
+                startColor="gray.500"
+                endColor="gray.400"
+                marginTop={10}
+                marginBottom={5}
+              />
+            )}
+          </Center>
 
-          <VStack paddingX={8} height={250}>
-            <Text marginBottom={5}>Nome: {plant?.name[0]}</Text>
+          <VStack paddingLeft={16}>
+            <Text marginBottom={2}>
+              Nome científico:{' '}
+              <Text fontWeight={'bold'}>
+                {plant?.scientific_name.toUpperCase()}
+              </Text>
+            </Text>
+            <Text>Nomes:</Text>
+            <FlatList
+              marginBottom={2}
+              data={plant?.name.sort(function (a, b) {
+                if (a < b) return -1
+                if (a > b) return 1
+                return 0
+              })}
+              renderItem={({ item }) => (
+                <Text fontWeight={'bold'} marginLeft={5}>
+                  {item}
+                </Text>
+              )}
+            />
             <Text>Tarefas:</Text>
             <FlatList
               data={plant?.tasks}
-              renderItem={({ item }) => <Text marginLeft={10}>{item}</Text>}
+              renderItem={({ item }) => (
+                <Text fontWeight={'bold'} marginLeft={5}>
+                  {item}
+                </Text>
+              )}
             />
           </VStack>
-        </Center>
+        </VStack>
       )}
     </VStack>
   )
