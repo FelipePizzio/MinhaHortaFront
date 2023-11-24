@@ -1,7 +1,7 @@
 import { Loading } from '@components/Loading'
 import { PlantCard } from '@components/PlantCard'
 import { PlantDTO } from '@dtos/PlantDTO'
-import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import { AppNavigatorRoutesProps } from '@routes/app.routes'
 import { api } from '@services/api'
 import { AppError } from '@utils/AppError'
@@ -14,13 +14,16 @@ import {
   VStack,
   useToast,
 } from 'native-base'
-import { useCallback, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { TouchableOpacity } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
 export function PlantCatalog() {
   const [list, setList] = useState<PlantDTO[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState()
+  const [total, setTotal] = useState()
 
   const navigation = useNavigation<AppNavigatorRoutesProps>()
   const toast = useToast()
@@ -33,31 +36,37 @@ export function PlantCatalog() {
     navigation.goBack()
   }
 
-  useFocusEffect(
-    useCallback(() => {
-      async function fetchPlants() {
-        try {
-          const response = await api.get('/plants')
-          setList(response.data.plants)
-        } catch (error) {
-          const isAppError = error instanceof AppError
-          const title = isAppError
-            ? error.message
-            : 'Não foi possível carregar o catalogo de plantas'
+  function renderFooter() {
+    if (totalPages && page <= totalPages) return <Loading />
+    return null
+  }
 
-          toast.show({
-            title,
-            placement: 'top',
-            backgroundColor: 'red.500',
-          })
-        } finally {
-          setIsLoading(false)
-        }
-      }
+  async function fetchPlants() {
+    try {
+      const response = await api.get(`/plants/${page}`)
+      setList([...list, ...response.data.plants])
+      setTotalPages(response.data.totalPages)
+      setTotal(response.data.totalResults)
+    } catch (error) {
+      const isAppError = error instanceof AppError
+      const title = isAppError
+        ? error.message
+        : 'Não foi possível carregar o catalogo de plantas'
 
-      fetchPlants()
-    }, []),
-  )
+      toast.show({
+        title,
+        placement: 'top',
+        backgroundColor: 'red.500',
+      })
+    } finally {
+      setIsLoading(false)
+      setPage(page + 1)
+    }
+  }
+
+  useEffect(() => {
+    fetchPlants()
+  }, [])
 
   return (
     <VStack flex={1}>
@@ -80,7 +89,7 @@ export function PlantCatalog() {
           <HStack justifyContent="space-between" marginY={5}>
             <Heading fontFamily="heading">Catalogo de Plantas</Heading>
             <Text color="gray.300" fontSize="sm">
-              {list?.length || 0}
+              {total}
             </Text>
           </HStack>
 
@@ -91,6 +100,9 @@ export function PlantCatalog() {
             _contentContainerStyle={{
               paddingBottom: 20,
             }}
+            onEndReached={fetchPlants}
+            onEndReachedThreshold={0.1}
+            ListFooterComponent={renderFooter}
             renderItem={({ item }) => (
               <PlantCard data={item} onPress={() => handleOpen(item.id)} />
             )}
