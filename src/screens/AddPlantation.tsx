@@ -83,7 +83,7 @@ export function AddPlantation() {
     useCallback(() => {
       async function fetchPlants() {
         try {
-          const response = await api.get('/plants')
+          const response = await api.get('/plants/0')
           setList(response.data.plants)
         } catch (error) {
           const isAppError = error instanceof AppError

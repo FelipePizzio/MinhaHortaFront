@@ -30,6 +30,28 @@
         "android.permission.RECORD_AUDIO"
       ],
       "package": "com.MinhaHorta"
+    },
+    "extra": {
+      "eas": {
+        "build": {
+          "experimental": {
+            "ios": {
+              "appExtensions": [
+                {
+                  "targetName": "OneSignalNotificationServiceExtension",
+                  "bundleIdentifier": "com.MinhaHorta.OneSignalNotificationServiceExtension",
+                  "entitlements": {
+                    "com.apple.security.application-groups": [
+                      "group.com.MinhaHorta.onesignal"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "projectId": "05668524-48ea-4872-8dba-e812850434e8"
+      }
     }
   }
 }
