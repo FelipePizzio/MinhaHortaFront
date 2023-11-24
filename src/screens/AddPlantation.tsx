@@ -8,6 +8,7 @@ import {
   Select,
   FormControl,
   WarningOutlineIcon,
+  Text,
 } from 'native-base'
 import { TouchableOpacity } from 'react-native'
 import { Feather } from '@expo/vector-icons'
@@ -130,7 +131,10 @@ export function AddPlantation() {
         </Heading>
       </HStack>
 
-      <Center margin={5} height={500}>
+      <Center margin={5} height={300}>
+        <Text fontSize={11}>
+          O nome serve apenas para identificação nas lista de tarefas
+        </Text>
         <Controller
           control={control}
           name="name"
@@ -148,8 +152,8 @@ export function AddPlantation() {
           control={control}
           name="plantId"
           render={({ field: { onChange } }) => (
-            <FormControl>
-              <Select onValueChange={onChange} placeholder="Escolha a planta">
+            <FormControl isReadOnly>
+              <Select onValueChange={onChange} placeholder="Escolha uma planta">
                 {list.map((item) => {
                   return (
                     <Select.Item
